@@ -1,0 +1,323 @@
+{
+  "info": {
+    "_postman_id": "ffa2ba47-0609-4b91-ab0d-a1cb25b0cef5",
+    "name": "API Testing - Variables and CRUD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27059516"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Login user-create token",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n \"email\": \"geekqa_stage@gmail.com\",\r\n  \"password\": \"stage\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://apis.geekqa.net/api/login",
+              "protocol": "https",
+              "host": [
+                "apis",
+                "geekqa",
+                "net"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ger user profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/profile",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "All products",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FwaXMuZ2Vla3FhLm5ldC9hcGkvbG9naW4iLCJpYXQiOjE3NDA3MTMxODksImV4cCI6MTc0MDcxNDk4OSwibmJmIjoxNzQwNzEzMTg5LCJqdGkiOiJleXNmNndzOTJCRjdPVUJJIiwic3ViIjoiMTAiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.uG_w7Q7CwrCi7mX3Hjf-tzRjnVT5z3czW2ISXQuMLXA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://apis.geekqa.net/api/products",
+              "protocol": "https",
+              "host": [
+                "apis",
+                "geekqa",
+                "net"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "// Parse the response body\r",
+                  "let response = pm.response.json(); \r",
+                  "\r",
+                  "// Extract a specific value, e.g., \"id\"\r",
+                  "let value = response.product.id; \r",
+                  "\r",
+                  "// Set the extracted value as an environment variable\r",
+                  "pm.environment.set(\"id\", value);"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FwaXMuZ2Vla3FhLm5ldC9hcGkvbG9naW4iLCJpYXQiOjE3NDA3MTMxODksImV4cCI6MTc0MDcxNDk4OSwibmJmIjoxNzQwNzEzMTg5LCJqdGkiOiJleXNmNndzOTJCRjdPVUJJIiwic3ViIjoiMTAiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.uG_w7Q7CwrCi7mX3Hjf-tzRjnVT5z3czW2ISXQuMLXA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n \r\n    \"products_name\": \"Iphone 16 ProMAx\",\r\n    \"products_status\": \"Available\",\r\n    \"products_model\": \"Iphone\",\r\n    \"products_url\": \"http://iphone.test.com\",\r\n    \"products_quantity\": 52,\r\n    \"status\": 1,\r\n    \"products_price_ex_tax\": \"1600.00\",\r\n    \"products_tax_percentage\": \"145.00\",\r\n    \"products_rating\": \"4.50\",\r\n    \"products_description\": \"Iphone 16 ProMAx 1TB 16GB\",\r\n    \"products_brand_name\": \"Apple\",\r\n    \"products_brand_id\": 2,\r\n    \"products_thumbnail\": null,\r\n    \"created_at\": null,\r\n    \"products_categories\":[\r\n        \"mobile\",\r\n        \"electronics\"\r\n    ],\r\n    \"products_attributes\":[\r\n        {\r\n         \"size\": \"small\",\r\n         \"color\": \"gray\",\r\n         \"height\": \"115cm\",\r\n         \"width\": \"45cm\"\r\n\r\n        }\r\n        ],\r\n\r\n    \"updated_at\": \"2024-09-23T00:43:54.000000Z\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://apis.geekqa.net/api/products",
+              "protocol": "https",
+              "host": [
+                "apis",
+                "geekqa",
+                "net"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://virtserver.swaggerhub.com/ExtraZamil/API/1.0.0/products' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"products_name\": \"string\",\r\n  \"products_status\": \"string\",\r\n  \"products_model\": \"string\",\r\n  \"products_url\": \"string\",\r\n  \"products_quantity\": 0,\r\n  \"status\": 0,\r\n  \"products_price_ex_tax\": 0,\r\n  \"products_tax_percentage\": 0,\r\n  \"products_brand_name\": \"string\",\r\n  \"products_brand_id\": 0,\r\n  \"products_categories\": [\r\n    \"string\"\r\n  ],\r\n  \"products_attributes\": [\r\n    \"string\"\r\n  ],\r\n  \"products_thumbnail\": \"string\",\r\n  \"height\": 0,\r\n  \"width\": 0\r\n}'"
+          },
+          "response": []
+        },
+        {
+          "name": "Get product by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{URL}}{/api/products/8852",
+              "host": [
+                "{{URL}}{"
+              ],
+              "path": [
+                "api",
+                "products",
+                "8852"
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://virtserver.swaggerhub.com/ExtraZamil/API/1.0.0/products/12' \\\r\n  -H 'accept: application/json'"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete product by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{URL}}/api/products/8851",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "8851"
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'DELETE' \\\r\n  'https://virtserver.swaggerhub.com/ExtraZamil/API/1.0.0/products/1' \\\r\n  -H 'accept: application/json'"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "URL",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}
